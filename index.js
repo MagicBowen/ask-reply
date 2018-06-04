@@ -1,4 +1,5 @@
 const AixBot = require('aixbot');
+const Chatbot = require('./chatbot');
 const fs = require('fs');
 
 const aixbot = new AixBot('317390438728205312');
@@ -11,39 +12,49 @@ aixbot.use(async (ctx, next) => {
     console.log(`... response in duration ${execTime}ms`);
 });
 
-aixbot.onEvent('enterSkill', (ctx) => {
-    console.log('in enter skill');
-    ctx.query('你好，请开始录音').record();
+aixbot.use((ctx, next) => {
+    const chatbot = new Chatbot('question-answer', 'http://xiaoda.ai/kingsoft-demo/query');
+    const reply = async (ctx, getResponse) => {
+        const res = await getResponse();
+        if (!res.data || !res.data.type) return ctx.query(res.reply);
+        if (res.data.type === 'start-record') return ctx.query(res.reply).record();
+        if (res.data.type === 'play-record') return ctx.query(res.reply).playMsgs([res.data['file-id']]);
+    };
+    ctx.replyToText = async () => {
+        await reply(ctx, () => {chatbot.replyToText(ctx.request.user, ctx.request.query)});
+    };
+    ctx.replyToEvent = async (eventName) => {
+        await reply(ctx, () => {chatbot.replyToEvent(ctx.request.user, eventName)});
+    };
+    ctx.replyToRecord = async () => {
+        let asr = ctx.request.body.request.event_property.asr_text;
+        let fileId = ctx.request.body.request.event_property.msg_file_id;
+        await reply(ctx, () => {chatbot.replyToRecord(ctx.request.user, asr, fileId)});
+    };
 });
 
-aixbot.onEvent('recordFinish', (ctx) => {
-    console.log('in record finish');
-    let asr = ctx.request.body.request.event_property.asr_text;
-    let msgId = ctx.request.body.request.event_property.msg_file_id;
-    console.log(`query in record finish : ${ctx.request.query}`);
-    console.log(`asr text in record finish : ${asr}`);
-    console.log(`msg id in record finish : ${msgId}`);
-    ctx.speak(asr).playMsgs([msgId]).wait();
+aixbot.onEvent('noResponse', async (ctx) =>{
+    await ctx.replyToEvent('no-response');
 });
 
-aixbot.onEvent('recordFail', (ctx) => {
-    console.log('in record fail');
-    ctx.query('录音失败，请重录').record();
+aixbot.onEvent('enterSkill', async (ctx) => {
+    await ctx.replyToEvent('open-app');
 });
 
-aixbot.onEvent('quitSkill', (ctx) => {
-    console.log('in quit skill');
-    ctx.reply('再见').closeSession();
+aixbot.onEvent('quitSkill', async (ctx) => {
+    await ctx.replyToEvent('close-app');
 });
 
-aixbot.hears('我很爱你', (ctx) => {
-    console.log('in love');
-    ctx.speak('我也爱你');
+aixbot.onEvent('inSkill', async (ctx) => {
+    await ctx.replyToText();
 });
 
-aixbot.hears(/\W+/, (ctx) => {
-    console.log('in echo');
-    ctx.speak(ctx.request.query);
+aixbot.onEvent('recordFail', async (ctx) => {
+    await ctx.replyToEvent('record-fail');
+});
+
+aixbot.onEvent('recordFinish', async (ctx) => {
+    await ctx.replyToRecord();
 });
 
 let tlsOptions = {
