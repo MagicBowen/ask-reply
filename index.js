@@ -36,6 +36,11 @@ aixbot.onEvent('quitSkill', (ctx) => {
     ctx.reply('再见').closeSession();
 });
 
+aixbot.hears('我很爱你', (ctx) => {
+    console.log('in love');
+    ctx.speak('我也爱你');
+});
+
 aixbot.hears(/\*/, (ctx) => {
     console.log('in echo');
     ctx.speak(ctx.request.query);
