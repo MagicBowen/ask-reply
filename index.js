@@ -13,7 +13,7 @@ aixbot.use(async (ctx, next) => {
     console.log(`... response in duration ${execTime}ms`);
 });
 
-aixbot.use((ctx, next) => {
+aixbot.use(async (ctx, next) => {
     const chatbot = new Chatbot('question-answer', 'http://xiaoda.ai/kingsoft-demo/query');
     const reply = async (ctx, getResponse) => {
         const res = await getResponse();
@@ -35,6 +35,7 @@ aixbot.use((ctx, next) => {
         let fileId = ctx.request.body.request.event_property.msg_file_id;
         await reply(ctx, () => {chatbot.replyToRecord(ctx.request.user, asr, fileId)});
     };
+    await next();
 });
 
 aixbot.onEvent('noResponse', async (ctx) =>{
