@@ -41,7 +41,7 @@ aixbot.hears('我很爱你', (ctx) => {
     ctx.speak('我也爱你');
 });
 
-aixbot.hears(/\*/, (ctx) => {
+aixbot.hears(/\W+/, (ctx) => {
     console.log('in echo');
     ctx.speak(ctx.request.query);
 });
