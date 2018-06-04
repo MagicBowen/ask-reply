@@ -39,7 +39,7 @@ class Chatbot {
     }
 
     formatResponse(response) {
-        logger.debug(`chatbot reply ${JSON.stringfy(response)}`);
+        logger.debug(`chatbot reply ${JSON.stringify(response)}`);
         if (response.reply) {
             response.reply = this.concatReplies(response.reply);
         }
