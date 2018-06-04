@@ -12,6 +12,7 @@ aixbot.use(async (ctx, next) => {
 });
 
 aixbot.onEvent('enterSkill', (ctx) => {
+    console.log('in enter skill');
     ctx.query('你好，请开始录音').record();
 });
 
@@ -35,7 +36,7 @@ aixbot.onEvent('quitSkill', (ctx) => {
     ctx.reply('再见').closeSession();
 });
 
-aixbot.hears(/\w+/, (ctx) => {
+aixbot.hears(/\*/, (ctx) => {
     console.log('in echo');
     ctx.speak(ctx.request.query);
 });
