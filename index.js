@@ -3,7 +3,7 @@ const fs = require('fs');
 const Chatbot = require('./chatbot');
 const logger = require('./logger').logger('index');
 
-const aixbot = new AixBot('317390438728205312');
+const aixbot = new AixBot();
 
 aixbot.use(async (ctx, next) => {
     console.log(`process request for '${ctx.request.query}' ...`);
