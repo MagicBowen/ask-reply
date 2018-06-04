@@ -63,13 +63,15 @@ aixbot.onEvent('recordFinish', async (ctx) => {
 });
 
 aixbot.onError((err, ctx) => {
-    logger.error(`error occurred, ${err}`);
+    logger.error(`error occurred: ${err}`);
+    logger.error(`error stack: ${err.stack}`);
     ctx.reply('内部错误，稍后再试').closeSession();
 });
 
-const tlsOptions = {
-    key: fs.readFileSync('./keys/1522555444697.key'),
-    cert: fs.readFileSync('./keys/1522555444697.pem')
-};
+// const tlsOptions = {
+//     key: fs.readFileSync('./keys/1522555444697.key'),
+//     cert: fs.readFileSync('./keys/1522555444697.pem')
+// };
 
-aixbot.run(8086, '0.0.0.0', tlsOptions);
+// aixbot.run(8086, '0.0.0.0', tlsOptions);
+aixbot.run(8086);
