@@ -31,4 +31,9 @@ aixbot.onEvent('quitSkill', (ctx) => {
     ctx.reply('再见').closeSession();
 });
 
-aixbot.run(8086);
+let tlsOptions = {
+    key: fs.readFileSync('./keys/1522555444697.key'),
+    cert: fs.readFileSync('./keys/1522555444697.pem')
+};
+
+aixbot.run(8086, '0.0.0.0', tlsOptions);
