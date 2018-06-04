@@ -18,9 +18,15 @@ aixbot.use(async (ctx, next) => {
     const reply = async (ctx, getResponse) => {
         const res = await getResponse();
         if (res.data && res.data.length > 0) {
-            if (res.data[0].type === 'start-record') return ctx.query(res.reply).record();
-            if (res.data[0].type === 'play-record') return ctx.query(res.reply).playMsgs([res.data[0]['file-id']]);
             if (res.data[0].type === 'quit-app') return ctx.reply(res.reply).closeSession();
+            if (res.data[0].type === 'start-record') return ctx.query(res.reply).record();
+            if (res.data[0].type === 'play-record') {
+                const fileId = res.data[0]['file-id'];
+                if (fileId) {
+                    return ctx.query(res.reply).playMsgs([res.data[0]['file-id']]);
+                } 
+                return ctx.query(res.reply + ':' + res.data[0].content);
+            }
         }
         return ctx.query(res.reply);
     };
