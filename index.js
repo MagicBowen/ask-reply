@@ -23,7 +23,7 @@ aixbot.use(async (ctx, next) => {
             if (res.data[0].type === 'play-record') {
                 const fileId = res.data[0]['file-id'];
                 if (fileId) {
-                    return ctx.query(res.reply).playMsgs([res.data[0]['file-id']]);
+                    return ctx.query(res.reply).playMsgs([fileId]);
                 } 
                 return ctx.query(res.reply + ':' + res.data[0].content);
             }
