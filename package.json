@@ -1,7 +1,7 @@
 {
   "name": "ask-reply",
   "version": "1.0.0",
-  "description": "Kill for XiaoAi Public Platform",
+  "description": "Adapter for XiaoAi Public Platform skill",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MagicBowen/ask-reply/issues"
   },
-  "homepage": "https://github.com/MagicBowen/ask-reply#readme"
+  "homepage": "https://github.com/MagicBowen/ask-reply#readme",
+  "dependencies": {
+    "aixbot": "^1.0.1"
+  }
 }
