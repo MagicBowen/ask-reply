@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/MagicBowen/ask-reply#readme",
   "dependencies": {
-    "aixbot": "^1.0.1"
+    "aixbot": "^1.0.1",
+    "fs": "0.0.1-security"
   }
 }
