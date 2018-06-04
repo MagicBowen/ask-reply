@@ -57,7 +57,7 @@ aixbot.onEvent('recordFinish', async (ctx) => {
     await ctx.replyToRecord();
 });
 
-let tlsOptions = {
+const tlsOptions = {
     key: fs.readFileSync('./keys/1522555444697.key'),
     cert: fs.readFileSync('./keys/1522555444697.pem')
 };
