@@ -20,6 +20,7 @@ aixbot.use(async (ctx, next) => {
         if (!res.data || !res.data.type) return ctx.query(res.reply);
         if (res.data.type === 'start-record') return ctx.query(res.reply).record();
         if (res.data.type === 'play-record') return ctx.query(res.reply).playMsgs([res.data['file-id']]);
+        if (res.data.type === 'quit-app') return ctx.reply(res.reply).closeSession();
     };
     ctx.replyToText = async () => {
         await reply(ctx, async () => {return await chatbot.replyToText(ctx.request.user, ctx.request.query)});
