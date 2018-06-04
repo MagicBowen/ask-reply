@@ -34,8 +34,7 @@ class Chatbot {
                      userContext : { access_token : user.access_token } };
 
         let response = await postJson(this.uri, data);
-        this.formatResponse(response);
-        return response;
+        return this.formatResponse(response);
     }
 
     formatResponse(response) {
@@ -43,6 +42,7 @@ class Chatbot {
         if (response.reply) {
             response.reply = this.concatReplies(response.reply);
         }
+        return response;
     }
 
     concatReplies(replies) {
