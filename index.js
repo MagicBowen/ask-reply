@@ -23,17 +23,17 @@ aixbot.use(async (ctx, next) => {
     };
     ctx.replyToText = async () => {
         logger.debug(`reply to text`);
-        await reply(ctx, () => {chatbot.replyToText(ctx.request.user, ctx.request.query)});
+        await reply(ctx, async () => {return await chatbot.replyToText(ctx.request.user, ctx.request.query)});
     };
     ctx.replyToEvent = async (eventName) => {
         logger.debug(`reply to event ${eventName}`);
-        await reply(ctx, () => {chatbot.replyToEvent(ctx.request.user, eventName)});
+        await reply(ctx, async () => {return await chatbot.replyToEvent(ctx.request.user, eventName)});
     };
     ctx.replyToRecord = async () => {
         logger.debug(`reply to revord`);
         let asr = ctx.request.body.request.event_property.asr_text;
         let fileId = ctx.request.body.request.event_property.msg_file_id;
-        await reply(ctx, () => {chatbot.replyToRecord(ctx.request.user, asr, fileId)});
+        await reply(ctx, async () => {return await chatbot.replyToRecord(ctx.request.user, asr, fileId)});
     };
     await next();
 });
@@ -67,9 +67,10 @@ aixbot.onError((err, ctx) => {
     ctx.reply('内部错误，稍后再试').closeSession();
 });
 
-const tlsOptions = {
-    key: fs.readFileSync('./keys/1522555444697.key'),
-    cert: fs.readFileSync('./keys/1522555444697.pem')
-};
+// const tlsOptions = {
+//     key: fs.readFileSync('./keys/1522555444697.key'),
+//     cert: fs.readFileSync('./keys/1522555444697.pem')
+// };
 
-aixbot.run(8086, '0.0.0.0', tlsOptions);
+// aixbot.run(8086, '0.0.0.0', tlsOptions);
+aixbot.run(8086);

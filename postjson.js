@@ -1,13 +1,14 @@
 const request = require('request');
+const logger = require('./logger').logger('postjson');
 
 module.exports = (uri, data) => {
     return new Promise( (resolve, reject) => { 
         request( { method : 'POST'
                  , uri : uri
-                 , multipart: [{'content-type': 'application/json', body: JSON.stringify(data)}]
+                 , json : data
                  }, (err, res, body) => {
                     if (!err && res.statusCode == 200) {
-                        resolve(body.reply);
+                        resolve(body);
                       } else {
                         reject(err);
                       }
