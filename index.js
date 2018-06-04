@@ -32,6 +32,10 @@ aixbot.onEvent('quitSkill', (ctx) => {
     ctx.reply('再见').closeSession();
 });
 
+aixbot.hears(/\w+/, (ctx) => {
+    ctx.speak(ctx.request.query);
+});
+
 let tlsOptions = {
     key: fs.readFileSync('./keys/1522555444697.key'),
     cert: fs.readFileSync('./keys/1522555444697.pem')
