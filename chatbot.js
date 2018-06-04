@@ -14,7 +14,7 @@ class Chatbot {
                      userContext : { access_token : user.access_token } };
 
         let response = await postJson(this,uri, data)
-        return formatResponse(response);
+        return this.formatResponse(response);
     }
 
     async replyToRecord(user, asr, fileId) {
@@ -24,7 +24,7 @@ class Chatbot {
                      userContext : { access_token : user.access_token, file_id : fileId } };
 
         let response = await postJson(this,uri, data)
-        return formatResponse(response);        
+        return this.formatResponse(response);        
     }
     
     async replyToEvent(user, eventType, params) {
@@ -34,7 +34,7 @@ class Chatbot {
                      userContext : { access_token : user.access_token } };
 
         let response = await postJson(this.uri, data)
-        return formatResponse(response);
+        return this.formatResponse(response);
     }
 
     formatResponse(response) {
