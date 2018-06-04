@@ -1,4 +1,5 @@
 const postJson = require('./postjson');
+const logger = require('./logger').logger('chatbot');
 
 class Chatbot {
     constructor(agent, uri) {
@@ -37,6 +38,7 @@ class Chatbot {
     }
 
     formatResponse(response) {
+        logger.debug(`chatbot reply ${response}`);
         if (response.reply) {
             response.reply = this.concatReplies(response.reply);
         }

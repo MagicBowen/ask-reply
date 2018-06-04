@@ -1,6 +1,7 @@
 const AixBot = require('aixbot');
-const Chatbot = require('./chatbot');
 const fs = require('fs');
+const Chatbot = require('./chatbot');
+const logger = require('./logger').logger('index');
 
 const aixbot = new AixBot('317390438728205312');
 
@@ -21,12 +22,15 @@ aixbot.use((ctx, next) => {
         if (res.data.type === 'play-record') return ctx.query(res.reply).playMsgs([res.data['file-id']]);
     };
     ctx.replyToText = async () => {
+        logger.debug(`reply to text`);
         await reply(ctx, () => {chatbot.replyToText(ctx.request.user, ctx.request.query)});
     };
     ctx.replyToEvent = async (eventName) => {
+        logger.debug(`reply to event ${eventName}`);
         await reply(ctx, () => {chatbot.replyToEvent(ctx.request.user, eventName)});
     };
     ctx.replyToRecord = async () => {
+        logger.debug(`reply to revord`);
         let asr = ctx.request.body.request.event_property.asr_text;
         let fileId = ctx.request.body.request.event_property.msg_file_id;
         await reply(ctx, () => {chatbot.replyToRecord(ctx.request.user, asr, fileId)});
