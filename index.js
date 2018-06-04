@@ -16,6 +16,7 @@ aixbot.onEvent('enterSkill', (ctx) => {
 });
 
 aixbot.onEvent('recordFinish', (ctx) => {
+    console.log('in record finish');
     let asr = ctx.request.body.request.event_property.asr_text;
     let msgId = ctx.request.body.request.event_property.msg_file_id;
     console.log(`query in record finish : ${ctx.request.query}`);
@@ -25,14 +26,17 @@ aixbot.onEvent('recordFinish', (ctx) => {
 });
 
 aixbot.onEvent('recordFail', (ctx) => {
+    console.log('in record fail');
     ctx.query('录音失败，请重录').record();
 });
 
 aixbot.onEvent('quitSkill', (ctx) => {
+    console.log('in quit skill');
     ctx.reply('再见').closeSession();
 });
 
 aixbot.hears(/\w+/, (ctx) => {
+    console.log('in echo');
     ctx.speak(ctx.request.query);
 });
 
