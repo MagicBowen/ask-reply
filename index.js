@@ -1,6 +1,6 @@
 const AixBot = require('aixbot');
 
-const aixbot = new AixBot('123');
+const aixbot = new AixBot('317390438728205312');
 
 aixbot.use(async (ctx, next) => {
     console.log(`process request for '${ctx.request.query}' ...`);
@@ -31,4 +31,4 @@ aixbot.onEvent('quitSkill', (ctx) => {
     ctx.reply('再见').closeSession();
 });
 
-aixbot.run(8080);
+aixbot.run(8086);
