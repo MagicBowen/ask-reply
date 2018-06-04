@@ -22,14 +22,14 @@ aixbot.use(async (ctx, next) => {
             if (res.data[0].type === 'start-record') return ctx.query(res.reply).record();
             if (res.data[0].type === 'play-record') {
                 // const fileId = res.data[0]['file-id'];
-                // const needRecord = ((res.data.length > 1) && (res.data[1].type === 'start-record'));
+                const needRecord = ((res.data.length > 1) && (res.data[1].type === 'start-record'));
                 // if (fileId) {
                 //     if (needRecord) return ctx.query(res.reply).playMsgs([fileId]).record();
                 //     return ctx.query(res.reply).playMsgs([fileId]);
                 // } 
-                // if (needRecord) {
-                //     return ctx.query(res.reply + ':' + res.data[0].content).record();
-                // }
+                if (needRecord) {
+                    return ctx.query(res.reply + ':' + res.data[0].content).record();
+                }
                 return ctx.query(res.reply + ':' + res.data[0].content);
             }
         }
