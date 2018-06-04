@@ -69,9 +69,9 @@ aixbot.onEvent('recordFinish', async (ctx) => {
 });
 
 aixbot.onError((err, ctx) => {
+    ctx.reply('内部错误，稍后再试').closeSession();
     logger.error(`error occurred: ${err}`);
     logger.error(`error stack: ${err.stack}`);
-    ctx.reply('内部错误，稍后再试').closeSession();
 });
 
 const tlsOptions = {
