@@ -32,8 +32,9 @@ class Chatbot {
                      session : user.user_id, 
                      agent   : this.agent, 
                      userContext : { access_token : user.access_token } };
-
+        logger.debug(`reply to event here: ${data}`);
         let response = await postJson(this.uri, data)
+        logger.debug(`reply to event here: ${response}`);
         return this.formatResponse(response);
     }
 
