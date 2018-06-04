@@ -17,10 +17,12 @@ aixbot.use(async (ctx, next) => {
     const chatbot = new Chatbot('question-answer', 'http://xiaoda.ai/kingsoft-demo/query');
     const reply = async (ctx, getResponse) => {
         const res = await getResponse();
-        if (!res.data || !res.data.type) return ctx.query(res.reply);
-        if (res.data.type === 'start-record') return ctx.query(res.reply).record();
-        if (res.data.type === 'play-record') return ctx.query(res.reply).playMsgs([res.data['file-id']]);
-        if (res.data.type === 'quit-app') return ctx.reply(res.reply).closeSession();
+        if (res.data && res.data.length > 0) {
+            if (res.data[0].type === 'start-record') return ctx.query(res.reply).record();
+            if (res.data[0].type === 'play-record') return ctx.query(res.reply).playMsgs([res.data[0]['file-id']]);
+            if (res.data[0].type === 'quit-app') return ctx.reply(res.reply).closeSession();
+        }
+        return ctx.query(res.reply);
     };
     ctx.replyToText = async () => {
         await reply(ctx, async () => {return await chatbot.replyToText(ctx.request.user, ctx.request.query)});
