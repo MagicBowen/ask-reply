@@ -1,0 +1,19 @@
+{
+  "name": "ask-reply",
+  "version": "1.0.0",
+  "description": "Kill for XiaoAi Public Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MagicBowen/ask-reply.git"
+  },
+  "author": "Bowen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MagicBowen/ask-reply/issues"
+  },
+  "homepage": "https://github.com/MagicBowen/ask-reply#readme"
+}
