@@ -23,7 +23,7 @@ aixbot.use(async (ctx, next) => {
             if (res.data[0].type === 'play-record') {
                 const fileId = res.data[0]['file-id'];
                 const needRecord = ((res.data.length > 1) && (res.data[1].type === 'start-record'));
-                if (needRecord) return ctx.directiveRecord(fileId).record();
+                if (needRecord) return ctx.directiveTts(res.reply).directiveRecord(fileId).record();
                 if (fileId) return ctx.query(res.reply).playMsgs([fileId]);
                 return ctx.query(res.reply + ':' + res.data[0].content);
             }
