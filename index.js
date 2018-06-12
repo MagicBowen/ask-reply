@@ -37,7 +37,7 @@ aixbot.use(async (ctx, next) => {
                         return ctx.query(res.reply).playMsgs([fileId]);                        
                     }
                 }
-                return ctx.query(res.reply + ':' + res.data[0].content + res.endReply);
+                return ctx.query(res.reply + ':' + res.data[0].content + ':' res.endReply);
             }
         }
         return ctx.query(res.reply);
