@@ -40,17 +40,34 @@ class Chatbot {
     formatResponse(response) {
         logger.debug(`chatbot reply ${JSON.stringify(response)}`);
         if (response.reply) {
-            response.reply = this.concatReplies(response.reply);
+            let ret = this.concatReplies(response.reply);
+            response.reply = ret.reply
+            response.endReply = ret.endReply
         }
         return response;
     }
 
+
+
     concatReplies(replies) {
-        let result = '';
+        let ret = {}
+        ret.reply = ''
+        ret.endReply = ''
+        let hasRecord = false
         for(let i = 0; i < replies.length; i++) {
-            result += replies[i];
-        }
-        return result;
+            if(replies[i] == 'play-record')
+            {
+                hasRecord = true
+                continue
+            }
+            if(hasRecord){
+               ret.endReply += replies[i]
+            }
+            else{
+               ret.reply += replies[i];    
+            }
+        }       
+        return ret;
     }
 }
 

@@ -29,8 +29,15 @@ aixbot.use(async (ctx, next) => {
                     } 
                     return ctx.query(res.reply + ':' + res.data[0].content).record();
                 }
-                if (fileId && fileId !== '') return ctx.query(res.reply).playMsgs([fileId]);
-                return ctx.query(res.reply + ':' + res.data[0].content);
+                if (fileId && fileId !== '') {
+                    if (res.endReply !== ''){
+                        return ctx.directiveTts(res.reply).directiveRecord(fileId).directiveTts(res.endReply)
+                    }
+                    else{
+                        return ctx.query(res.reply).playMsgs([fileId]);                        
+                    }
+                }
+                return ctx.query(res.reply + ':' + res.data[0].content + res.endReply);
             }
         }
         return ctx.query(res.reply);
