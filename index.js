@@ -40,7 +40,10 @@ aixbot.use(async (ctx, next) => {
                 return ctx.query(res.reply + ':' + res.data[0].content + ':' res.endReply);
             }
         }
-        return ctx.query(res.reply);
+        let ret = ctx.query(res.reply)
+        console.log(`the reply is ${ret}` )
+        return ret
+        // return ctx.query(res.reply);
     };
     ctx.replyToText = async () => {
         await reply(ctx, async () => {return await chatbot.replyToText(ctx.request.user, ctx.request.query)});
