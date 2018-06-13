@@ -41,7 +41,7 @@ aixbot.use(async (ctx, next) => {
             }
         }
         let ret = ctx.query(res.reply);
-        console.log(`the reply is ${ret}`);
+        console.log(`the reply is ${JSON.stringify(ret)}`);
         return ret;
         // return ctx.query(res.reply);
     };
