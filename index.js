@@ -40,9 +40,9 @@ aixbot.use(async (ctx, next) => {
                 return ctx.query(res.reply + ':' + res.data[0].content + ':' + res.endReply);
             }
         }
-        // let ret = ctx.query(res.reply);
-        // console.log(`the reply is ${ret}`);
-        return ctx.query(res.reply);
+        let ret = ctx.query(res.reply);
+        console.log(`the reply is ${ret}`);
+        return ret;
         // return ctx.query(res.reply);
     };
     ctx.replyToText = async () => {
