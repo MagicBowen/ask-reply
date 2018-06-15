@@ -14,7 +14,7 @@ aixbot.use(async (ctx, next) => {
 });
 
 aixbot.use(async (ctx, next) => {
-    const chatbot = new Chatbot('question-answer', 'http://xiaoda.ai/kingsoft-demo/query');
+    const chatbot = new Chatbot('question-answer', 'http://xiaoda.ai/water-drop/qa/');
     const reply = async (ctx, getResponse) => {
         const res = await getResponse();
         if (res.data && res.data.length > 0) {
