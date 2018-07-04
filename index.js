@@ -31,7 +31,7 @@ aixbot.use(async (ctx, next) => {
                 }
                 if (fileId && fileId !== '') {
                     if (res.endReply !== ''){
-                        return ctx.directiveTts(res.reply).directiveRecord(fileId).directiveTts(res.endReply)
+                        return ctx.directiveTts(res.reply).directiveRecord(fileId).directiveTts(res.endReply).wait()
                     }
                     else{
                         return ctx.query(res.reply).playMsgs([fileId]);                        
