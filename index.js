@@ -46,9 +46,9 @@ aixbot.use(async (ctx, next) => {
                     ctx.directiveAudio(audio)
                 }
                 if (needRecord) {
-                    ctx.record()
+                    ctx.response().record()
                 } else {
-                    ctx.wait()
+                    ctx.response().wait()
                 }
 
                 // if (needRecord) {
