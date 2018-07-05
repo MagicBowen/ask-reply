@@ -19,25 +19,53 @@ aixbot.use(async (ctx, next) => {
         const res = await getResponse();
         if (res.data && res.data.length > 0) {
             if (res.data[0].type === 'quit-app') return ctx.reply(res.reply).closeSession();
-            if (res.data[0].type === 'start-record') return ctx.query(res.reply).record();
+            if (res.data[0].type === 'start-record') {
+                if (res.data[0]['audio-url']) {
+                    return ctx.query(res.reply).directiveAudio(res.data[0]['audio-url']).record();
+                }
+                return ctx.query(res.reply).record();
+            }
             if (res.data[0].type === 'play-record') {
                 const fileId = res.data[0]['file-id'];
+                const content = res.data[0].content;
+                const audio = res.data[0]['audio-url'];
                 const needRecord = ((res.data.length > 1) && (res.data[1].type === 'start-record'));
-                if (needRecord) {
-                    if (fileId && fileId !== '') {
-                        return ctx.directiveTts(res.reply).directiveRecord(fileId).record();
-                    } 
-                    return ctx.query(res.reply + ':' + res.data[0].content).record();
+
+                if (res.reply) {
+                    ctx.directiveTts(res.reply);
                 }
                 if (fileId && fileId !== '') {
-                    if (res.endReply !== ''){
-                        return ctx.directiveTts(res.reply).directiveRecord(fileId).directiveTts(res.endReply).wait()
-                    }
-                    else{
-                        return ctx.query(res.reply).playMsgs([fileId]);                        
-                    }
+                    ctx.directiveRecord(fileId)
+                } else if (content && content != '') {
+                    ctx.directiveTts(content)
                 }
-                return ctx.query(res.reply + ':' + res.data[0].content + ':' + res.endReply);
+                if (res.endReply) {
+                    ctx.directiveTts(res.endReply)
+                }
+                if (audio) {
+                    ctx.directiveAudio(audio)
+                }
+                if (needRecord) {
+                    ctx.record()
+                } else {
+                    ctx.wait()
+                }
+
+                // if (needRecord) {
+                //     if (fileId && fileId !== '') {
+                //         return ctx.directiveTts(res.reply).directiveRecord(fileId).record();
+                //     } 
+                //     return ctx.query(res.reply + ':' + res.data[0].content).record();                    
+                // }
+                // if (fileId && fileId !== '') {
+                //     if (res.endReply !== ''){
+                //         return ctx.directiveTts(res.reply).directiveRecord(fileId).directiveTts(res.endReply).wait()
+                //     }
+                //     else{
+                //         return ctx.query(res.reply).playMsgs([fileId]);                        
+                //     }
+                // }
+                // return ctx.query(res.reply + ':' + res.data[0].content + ':' + res.endReply);
             }
         }
         let ret = ctx.query(res.reply);
