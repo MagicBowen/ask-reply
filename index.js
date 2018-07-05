@@ -21,7 +21,7 @@ aixbot.use(async (ctx, next) => {
             if (res.data[0].type === 'quit-app') return ctx.reply(res.reply).closeSession();
             if (res.data[0].type === 'start-record') {
                 if (res.data[0]['audio-url']) {
-                    return ctx.query(res.endReply).directiveAudio(res.data[0]['audio-url']).record();
+                    return ctx.directiveTts(res.endReply).directiveAudio(res.data[0]['audio-url']).record();
                 }
                 return ctx.query(res.reply).record();
             }
