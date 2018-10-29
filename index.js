@@ -50,28 +50,11 @@ aixbot.use(async (ctx, next) => {
                 } else {
                     ctx.response.wait()
                 }
-
-                // if (needRecord) {
-                //     if (fileId && fileId !== '') {
-                //         return ctx.directiveTts(res.reply).directiveRecord(fileId).record();
-                //     } 
-                //     return ctx.query(res.reply + ':' + res.data[0].content).record();                    
-                // }
-                // if (fileId && fileId !== '') {
-                //     if (res.endReply !== ''){
-                //         return ctx.directiveTts(res.reply).directiveRecord(fileId).directiveTts(res.endReply).wait()
-                //     }
-                //     else{
-                //         return ctx.query(res.reply).playMsgs([fileId]);                        
-                //     }
-                // }
-                // return ctx.query(res.reply + ':' + res.data[0].content + ':' + res.endReply);
             }
         }
         let ret = ctx.query(res.reply);
         console.log(`the reply is ${JSON.stringify(ret)}`);
         return ret;
-        // return ctx.query(res.reply);
     };
     ctx.replyToText = async () => {
         await reply(ctx, async () => {return await chatbot.replyToText(ctx.request.user, ctx.request.query)});
