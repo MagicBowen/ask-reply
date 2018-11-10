@@ -11,7 +11,7 @@ class Chatbot {
         let data = { query   : { query : text, confidence : 1.0 }, 
                      session : user.user_id, 
                      agent   : this.agent, 
-                     userContext : { access_token : user.access_token } };
+                     userContext : { access_token : user.access_token, gender: user.gender } };
 
         let response = await postJson(this.uri, data);
         return this.formatResponse(response);
@@ -21,7 +21,7 @@ class Chatbot {
         let data = { query   : { query : asr, confidence : 1.0 }, 
                      session : user.user_id, 
                      agent   : this.agent, 
-                     userContext : { access_token : user.access_token, file_id : fileId } };
+                     userContext : { access_token : user.access_token, file_id : fileId, gender: user.gender } };
 
         let response = await postJson(this.uri, data);
         return this.formatResponse(response);        
@@ -31,7 +31,7 @@ class Chatbot {
         let data = { event   : { name : eventType, content : params },
                      session : user.user_id, 
                      agent   : this.agent, 
-                     userContext : { access_token : user.access_token } };
+                     userContext : { access_token : user.access_token, gender: user.gender} };
 
         let response = await postJson(this.uri, data);
         return this.formatResponse(response);
